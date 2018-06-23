@@ -14,7 +14,7 @@ var spawn = require("child_process").spawn;
 
 
 var options = {
-    cwd: '/home/ashiswin/Documents/ProjectOracle/image_processing/',
+    cwd: '/home/ashiswin/Documents/ProjectOracle/image_processing/darknet/',
     env: process.env
 };
 
@@ -24,7 +24,7 @@ exports.new_image = function(req, res, next){
 
     var filename = req.files[0]['filename'];
     var cameraId = req.body["cameraId"];
-    var img_path = "../backend/uploads/" + filename;
+    var img_path = "../../backend/uploads/" + filename;
     var yoloErr;
 
     // start child yolo process
