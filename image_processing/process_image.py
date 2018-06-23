@@ -13,13 +13,13 @@ from io import BytesIO
 
 filename = str(time.time())
 
-#image = Image.open(sys.argv[1])
-image = Image.open("darknet/data/random.jpg")
+image = Image.open(sys.argv[1])
+#image = Image.open("darknet/data/random.jpg")
 
 FNULL = open(os.devnull, 'w')
 
 os.chdir("darknet")
-call(["./darknet", "detect", "cfg/yolov3.cfg", "yolov3.weights", "data/random.jpg"], stdout=FNULL, stderr=STDOUT)
+call(["./darknet", "detect", "cfg/yolov3.cfg", "yolov3.weights", sys.argv[1]], stdout=FNULL, stderr=STDOUT)
 os.chdir("..")
 
 boundingFile = open("darknet/bounding.txt", "r")
