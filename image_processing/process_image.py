@@ -54,7 +54,7 @@ for c in crops:
 	buffer = BytesIO()
 	c.save(buffer,format="JPEG") 
 	myimage = buffer.getvalue()
-	image["content"] = b64encode(myimage)
+	image["content"] = str(b64encode(myimage))
 	c.save(str(time.time()) + ".jpg")
 	request["image"] = image
 	
@@ -66,7 +66,7 @@ for c in crops:
 	req["requests"].append(request)
 
 GCP_URL = "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyDvjf4Eoio4On8HaboSFsFK1ZQj8xhj6Bg"
-r = requests.post(GCP_URL, data=json.dumps(req))
+r = requests.post(GCP_URL, json=req)
 response = r.json()
 
 textSets = []
