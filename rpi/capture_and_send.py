@@ -7,10 +7,9 @@ import sys
 import json
 import base64
 
-CAMERA_ID = '1'
-SERVER_URL = 'http://10.0.1.124:3000/api/v1/image/new'
+CAMERA_ID = '2'
+SERVER_URL = 'https://www.kodyac.tech:8080/api/v1/image/new'
 IMAGE_PATH = '/home/pi/my_image.jpg'
-#SERVER_URL = 'http://devostrum.no-ip.info:5000/'
 
 # Create camera object
 camera = PiCamera()

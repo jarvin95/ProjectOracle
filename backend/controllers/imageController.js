@@ -27,11 +27,11 @@ exports.new_image = function(req, res, next){
     var img_path = "./uploads/" + filename
 
     // start child yolo process
-    var child = spawn('python3', ['process_image.py', img_path, cameraId], options);
+    var child = spawn('python3', ['process_image.py', img_path], options);
 
     // save all the outputs
     child.stdout.on('data', function(data) {
-        console.log(data.toString());
+        console.log(data.toString())
     });
 
     // log error if any
