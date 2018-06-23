@@ -37,7 +37,7 @@ exports.new_image = function(req, res, next){
     // log error if any
     child.stderr.on('data', function(data) {
         console.log("ERR child process: " + data.toString());
-        yoloErr = "Generator Algorithm: " + data.toString();
+        var yoloErr = "Generator Algorithm: " + data.toString();
     });
 
     // once child process ends, update SQL table
