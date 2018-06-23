@@ -1,13 +1,15 @@
-import base64
 from io import BytesIO
 from time import sleep
 from picamera import PiCamera
 from PIL import Image
 import requests
 import sys
+import json
+import base64
 
-CAMERA_ID = 1
-SERVER_URL = 'localhost:5000'
+CAMERA_ID = '1'
+SERVER_URL = 'http://10.0.1.124:3000/api/v1/image/new'
+IMAGE_PATH = '/home/pi/my_image.jpg'
 #SERVER_URL = 'http://devostrum.no-ip.info:5000/'
 
 # Create camera object
@@ -21,20 +23,19 @@ while True:
         sleep(2)
 
         # Take photo
-        stream = BytesIO()
-        camera.capture(stream, format='jpeg')
-
-        # "Rewind" the stream to the beginning so we can read its content
-        stream.seek(0)
+        my_file = open(IMAGE_PATH, 'r+b')
+        camera.capture(my_file)
         
-        # Send binary to server
-        img_str = base64.b64encode(stream.getvalue())
-        payload = {'imageBase64': img_str, 'width': 1024, 'height': 728, 'cameraId': CAMERA_ID}
-        result = requests.post(SERVER_URL, payload)
+        # Send file to server        
+        files = {'file': open(IMAGE_PATH, 'r+b')}
+        payload = {'cameraID': CAMERA_ID}
+        result = requests.post(SERVER_URL, files=files, data=payload)
+
         print(result)
+        print(result.text)
 
         # Stop and rest
-        stream.close()
+        my_file.close()
         camera.stop_preview()
         sleep(60)
 
