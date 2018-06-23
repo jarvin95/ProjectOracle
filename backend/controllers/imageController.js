@@ -27,7 +27,7 @@ exports.new_image = function(req, res, next){
     var img_path = "../backend/uploads/" + filename
 
     // start child yolo process
-    var child = spawn('python3', ['process_image.py', img_path], options);
+    var child = spawn('python3.6', ['process_image.py', img_path], options);
 
     // save all the outputs
     child.stdout.on('data', function(data) {
