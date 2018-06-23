@@ -27,6 +27,7 @@ exports.fulfill = function (req, res, next) {
         if (err) throw err;
         if (typeof(result1) === undefined) {
             response = "I don't know what a " + param + " is.";
+            console.log(responseObj(response));
             return res.json(responseObj(response));
         }
         var query2 = "SELECT `reference_object` FROM Instance WHERE `parent_object_id` = \"" + result1 + "\" ORDER BY ID DESC LIMIT 1;";
@@ -34,9 +35,11 @@ exports.fulfill = function (req, res, next) {
             if (err) throw err;
             if (typeof(result2) === undefined) {
                 response = param + " cannot be found.";
+                console.log(responseObj(response));
                 return res.json(responseObj(response));
             }
             response = param + " is " + result2;
+            console.log(responseObj(response));
             return res.json(responseObj(response));
         });
     });
@@ -54,4 +57,3 @@ function responseObj(response) {
     "source": "Oracle by jr.io"}
 }
 
-console.log(responseObj);
