@@ -52,7 +52,7 @@ exports.new_image = function(req, res, next){
             var deleteInstanceQuery = "DELETE FROM Instance WHERE `parent_object_id` = ?";
             var insertInstanceQuery = "INSERT INTO Instance (`parent_object_id`, `reference_object`, `bounding_box`) VALUES (?,?,?)"
 
-            for (var key in json_data) {
+            Object.keys(json_data).forEach(function(key) {
                 // check if object exists
                 console.log("Check whether " + key + " exists in Objects")
                 con.query(selectObjectQuery, [key, cameraId], function(select_err, select_result) {
@@ -62,9 +62,9 @@ exports.new_image = function(req, res, next){
                         con.query(deleteInstanceQuery, [select_result[0].id]);
 
                         console.log(key + " exists, updating")
-                        for (var values in json_data[key]) {
-                            var bounding_box = values.slice(0,4).join();
-                            var reference_object = values[6];
+                        for (var index in json_data[key]) {
+                            var bounding_box = json_data[key][index].slice(0,4).join();
+                            var reference_object = json_data[key][index][6];
 
                             con.query(insertInstanceQuery, [select_result[0].id, reference_object, bounding_box]);
                         }
@@ -74,20 +74,19 @@ exports.new_image = function(req, res, next){
                         console.log(key + " does not exist, creating")
                         con.query(insertObjectQuery, [key, cameraId], function(insert_err, insert_result) {
                             if (!insert_err) {
-                                for (var values in json_data[key]) {
-                                    var bounding_box = values.slice(0,4).join();
-                                    var reference_object = values[6];
+                                for (var index in json_data[key]) {
+                                    var bounding_box = json_data[key][index].slice(0,4).join();
+                                    var reference_object = json_data[key][index][6];
 
                                     con.query(insertInstanceQuery, [insert_result.insertId, reference_object, bounding_box]);
                                 }
                             } else {
                                 console.log(insert_err);
                             }
-                            console.log(insert_result);
                         });
                     }
                 });
-            }
+            });
 
             res.json({"success":true});
         } else {
