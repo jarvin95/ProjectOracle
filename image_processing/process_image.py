@@ -24,6 +24,7 @@ os.chdir("..")
 
 boundingFile = open("darknet/bounding.txt", "r")
 boundingBox = []
+boundingBoxes = []
 crops = []
 labels = []
 lineCount = 0
@@ -34,6 +35,7 @@ for l in boundingFile.readlines():
 		boundingBox = l.split(", ")
 	else:
 		arr = boundingBox
+		boundingBoxes.append(arr)
 		c = image.crop((int(arr[0]), int(arr[1]), int(arr[2]), int(arr[3])))
 		crops.append(c)
 		c.save(l + ".jpg")
@@ -80,5 +82,15 @@ for r in response["responses"]:
 		for t in arr:
 			re.sub(r'\W+', '', t)
 			textSet.add(t.lower())
-	print(" ".join(textSet))
 
+
+objects = dict()
+
+for i in range(len(labels)):
+	l = labels[i]
+	if l not in objects.keys():
+		objects[l] = []
+	
+	objects[l].append(boundingBoxes[i])
+
+print(json.dumps(objects))
