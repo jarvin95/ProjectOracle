@@ -1,5 +1,8 @@
+import base64
+from io import BytesIO
 from time import sleep
 from picamera import PiCamera
+from PIL import Image
 import requests
 import sys
 
@@ -13,15 +16,25 @@ camera = PiCamera()
 # Repeatedly take photo and send
 while True:
     try:
-        my_file = open('/home/pi/my_image.jpg', 'wb')
-        
         # Camera warm up
         camera.start_preview()
         sleep(2)
 
         # Take photo
-        camera.capture(my_file)
-        my_file.close()
+        stream = BytesIO()
+        camera.capture(stream, format='jpeg')
+
+        # "Rewind" the stream to the beginning so we can read its content
+        stream.seek(0)
+        
+        # Send binary to server
+        img_str = base64.b64encode(stream.getvalue())
+        payload = {'imageBase64': img_str, 'width': 1024, 'height': 728, 'cameraId': CAMERA_ID}
+        result = requests.post(SERVER_URL, payload)
+        print(result)
+
+        # Stop and rest
+        stream.close()
         camera.stop_preview()
         sleep(60)
 
