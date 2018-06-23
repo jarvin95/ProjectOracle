@@ -19,21 +19,15 @@ var options = {
 };
 
 
-
-
 /*Call Isaac's function then send to DB*/
 exports.new_image = function(req, res, next){
 
-  /*  var imageBase64 = req.body["imageBase64"];
-    var width = req.body["width"];
-    var height = req.body["height"];
+    var filename = req.files[0]['filename']
     var cameraId = req.body["cameraId"];
-*/
-    console.log(req)
-    res.send("OK")
+    var img_path = "./uploads/" + filename
 
     // start child yolo process
-/*    var child = spawn('python3', ['process_image.py', imageBase64, width, height,cameraId], options);
+    var child = spawn('python3', ['process_image.py', img_path, cameraId], options);
 
     // save all the outputs
     child.stdout.on('data', function(data) {
@@ -49,11 +43,11 @@ exports.new_image = function(req, res, next){
     // once child process ends, update SQL table
     child.on('close', function(code) {
         if (!yoloErr) {
-
+            res.json({"success":true})
         } else {
             res.json({"success":false, "message":yoloErr});
         }
-    });*/
+    });
 };
 
 /*Query DB*/
