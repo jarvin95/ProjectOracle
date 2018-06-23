@@ -83,7 +83,6 @@ exports.new_image = function(req, res, next){
                             } else {
                                 console.log(insert_err);
                             }
-                            console.log(insert_result);
                         });
                     }
                 });
