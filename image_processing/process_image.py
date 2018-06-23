@@ -66,7 +66,7 @@ for c in crops:
 	req["requests"].append(request)
 
 GCP_URL = "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyDvjf4Eoio4On8HaboSFsFK1ZQj8xhj6Bg"
-r = requests.post(GCP_URL, json=req)
+r = requests.post(GCP_URL, data=json.dumps(req))
 response = r.json()
 
 textSets = []
