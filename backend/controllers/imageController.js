@@ -24,7 +24,7 @@ exports.new_image = function(req, res, next){
 
     var filename = req.files[0]['filename']
     var cameraId = req.body["cameraId"];
-    var img_path = "./uploads/" + filename
+    var img_path = "../backend/uploads/" + filename
 
     // start child yolo process
     var child = spawn('python3', ['process_image.py', img_path], options);
