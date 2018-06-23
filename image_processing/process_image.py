@@ -35,11 +35,12 @@ for l in boundingFile.readlines():
 		boundingBox = l.split(", ")
 	else:
 		arr = boundingBox
+		arr.append(int((int(arr[0]) + int(arr[2])) / 2))
+		arr.append(int((int(arr[1]) + int(arr[3])) / 2))
 		boundingBoxes.append(arr)
 		c = image.crop((int(arr[0]), int(arr[1]), int(arr[2]), int(arr[3])))
 		crops.append(c)
-		c.save(l + ".jpg")
-		
+		#c.save(l + ".jpg")
 		labels.append(l)
 
 	lineCount += 1
@@ -71,6 +72,10 @@ response = r.json()
 
 textSets = []
 
+if "responses" not in response.keys():
+	print("{}")
+	exit()
+
 for r in response["responses"]:
 	textSet = set()
 	textSets.append(textSet)
@@ -87,10 +92,29 @@ for r in response["responses"]:
 objects = dict()
 
 for i in range(len(labels)):
+	minj = -1
+	mind = 100000000000000000
+	
+	for j in range(len(labels)):
+		if i == j:
+			continue
+		
+		d = ((boundingBoxes[i][4] - boundingBoxes[j][4]) ** 2) + ((boundingBoxes[i][5] - boundingBoxes[j][5]) ** 2)
+		
+		if d < mind:
+			mind = d
+			minj = j
+	
 	l = labels[i]
 	if l not in objects.keys():
 		objects[l] = []
+	if minj != -1:
+		boundingBoxes[i].append(labels[minj])
+	else:
+		boundingBoxes[i].append('')
 	
 	objects[l].append(boundingBoxes[i])
 
 print(json.dumps(objects))
+
+
