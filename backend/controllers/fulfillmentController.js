@@ -24,7 +24,7 @@ exports.fulfill = function (req, res, next) {
     console.log("retrieve start");
     var query1 = "SELECT `id` FROM `Object` WHERE `name` = \"" + param + "\" LIMIT 1;";
     con.query(query1, function (err, result1) {
-        if (err) throw err
+        if (err) throw err;
         var object_id = result1[0].id;
         console.log("result1: " + object_id);
         if (typeof(object_id) === undefined) {
@@ -35,13 +35,14 @@ exports.fulfill = function (req, res, next) {
         var query2 = "SELECT `reference_object` FROM `Instance` WHERE `parent_object_id` = \"" + object_id + "\" ORDER BY ID DESC LIMIT 1;";
         con.query(query2, function (err, result2) {
             if (err) throw err;
-            console.log("result2: " + result2);
-            if (typeof(result2) === undefined) {
+            var position = result2[0].reference_object;
+            console.log("result2: " + position);
+            if (typeof(position) === undefined) {
                 response = param + " cannot be found.";
                 console.log(responseObj(response));
                 return res.json(responseObj(response));
             }
-            response = param + " is " + result2;
+            response = param + " is " + position;
             console.log(responseObj(response));
             return res.json(responseObj(response));
         });
