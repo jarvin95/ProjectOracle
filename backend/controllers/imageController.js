@@ -52,7 +52,7 @@ exports.new_image = function(req, res, next){
             var deleteInstanceQuery = "DELETE FROM Instance WHERE `parent_object_id` = ?";
             var insertInstanceQuery = "INSERT INTO Instance (`parent_object_id`, `reference_object`, `bounding_box`) VALUES (?,?,?)"
 
-            for (var key in json_data) {
+            Object.keys(json_data).forEach(function(key) {
                 // check if object exists
                 console.log("Check whether " + key + " exists in Objects")
                 con.query(selectObjectQuery, [key, cameraId], function(select_err, select_result) {
@@ -87,7 +87,7 @@ exports.new_image = function(req, res, next){
                         });
                     }
                 });
-            }
+            });
 
             res.json({"success":true});
         } else {
