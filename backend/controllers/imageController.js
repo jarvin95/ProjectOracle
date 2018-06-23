@@ -63,7 +63,7 @@ exports.new_image = function(req, res, next){
 
                         console.log("Object exists, updating")
                         for (var index in json_data[key]) {
-                            var bounding_box = json_data[key][index].slice(0,5).join();
+                            var bounding_box = json_data[key][index].slice(0,4).join();
                             var reference_object = json_data[key][index][6];
 
                             con.query(insertInstanceQuery, [select_result[0].id, reference_object, bounding_box]);
@@ -75,7 +75,7 @@ exports.new_image = function(req, res, next){
                         con.query(insertObjectQuery, [key, cameraId], function(insert_err, insert_result) {
                             if (!insert_err) {
                                 for (var index in json_data[key]) {
-                                    var bounding_box = json_data[key][index].slice(0,5).join();
+                                    var bounding_box = json_data[key][index].slice(0,4).join();
                                     var reference_object = json_data[key][index][6];
 
                                     con.query(insertInstanceQuery, [insert_result.insertId, reference_object, bounding_box]);
@@ -83,8 +83,10 @@ exports.new_image = function(req, res, next){
                             } else {
                                 console.log(insert_err);
                             }
+                            console.log(insert_result);3
                         });
                     }
+                    console.log("select_result: " + select_result);
                 });
             }
 
