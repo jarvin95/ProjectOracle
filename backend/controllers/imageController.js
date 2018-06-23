@@ -19,17 +19,6 @@ var options = {
 };
 
 
-var query1 = "SELECT `id` FROM Object WHERE name = \"" + item_string + "\";";
-con.query(query1, function (err, result1) {
-    if (err) throw err;
-    var query2 = "SELECT TOP 1 `reference_object` FROM Instance WHERE `parent_object_id` = \"" + result1 + "\";";
-    con.query(query2, function(err, result2) {
-        if (err) throw err;
-        return result2;
-    });
-});
-
-
 /*Call Isaac's function then send to DB*/
 exports.new_image = function(req, res, next){
 
