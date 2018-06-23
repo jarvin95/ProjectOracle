@@ -34,6 +34,7 @@ exports.new_image = function(req, res, next){
     // save all the outputs
     child.stdout.on('data', function(data) {
         output = data.toString();
+        console.log("output: " + output);
     });
 
     // log error if any
@@ -53,12 +54,14 @@ exports.new_image = function(req, res, next){
 
             for (var key in json_data) {
                 // check if object exists
+                console.log("Check whether " + key + " exists in Objects")
                 con.query(selectObjectQuery, [key, cameraId], function(select_err, select_result) {
                     
                     // if exists, delete from instances, and update
                     if (Object.keys(select_result).length) {
                         con.query(deleteInstanceQuery, [select_result[0].id]);
 
+                        console.log("Object exists, updating")
                         for (var index in json_data[key]) {
                             var bounding_box = json_data[key][index].slice(0,5).join();
                             var reference_object = json_data[key][index][6];
@@ -68,6 +71,7 @@ exports.new_image = function(req, res, next){
 
                     } else {
                         // else, create 
+                        console.log("Object does not exist, creating")
                         con.query(insertObjectQuery, [key, cameraId], function(insert_err, insert_result) {
                             if (!insert_err) {
                                 for (var index in json_data[key]) {
