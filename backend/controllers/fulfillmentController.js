@@ -31,7 +31,7 @@ exports.fulfill = function (req, res, next) {
         ],
         "source": "Oracle by jr.io"
     };
-
+    console.log(responseObj);
     return res.json(responseObj);
 };
 
@@ -56,9 +56,8 @@ function retrieve(item_string) {
 }
 
 function generate_message(item_string, item_location) {
-    if (item_location === "") {
+    if (typeof(item_location) === "undefined" || item_location === "undefined") {
         return item_string + " cannot be found."
     }
-    console.log(item_string + " is " + item_location);
     return item_string + " is " + item_location;
 }
