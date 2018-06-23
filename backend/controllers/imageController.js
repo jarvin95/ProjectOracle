@@ -58,7 +58,7 @@ exports.new_image = function(req, res, next){
                 con.query(selectObjectQuery, [key, cameraId], function(select_err, select_result) {
                     
                     // if exists, delete from instances, and update
-                    if (Object.keys(select_result).length) {
+                    if (select_result.length > 0) {
                         con.query(deleteInstanceQuery, [select_result[0].id]);
 
                         console.log("Object exists, updating")
