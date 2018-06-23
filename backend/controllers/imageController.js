@@ -29,6 +29,7 @@ exports.new_image = function(req, res, next){
     var height = req.body["height"];
     var cameraId = req.body["cameraId"];
 */
+    // Filename = req.files[0]["filename"]
     console.log(req)
     res.send("OK")
 
