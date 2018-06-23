@@ -23,7 +23,7 @@ var options = {
 exports.new_image = function(req, res, next){
 
     var filename = req.files[0]['filename'];
-    var cameraId = req.body["cameraId"];
+    var cameraId = req.body["cameraID"];
     var img_path = "../backend/uploads/" + filename;
     var yoloErr;
     var output;
