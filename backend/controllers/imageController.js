@@ -80,6 +80,8 @@ exports.new_image = function(req, res, next){
 
                                     con.query(insertInstanceQuery, [insert_result.insertId, reference_object, bounding_box]);
                                 }
+                            } else {
+                                console.log(insert_err);
                             }
                         });
                     }
