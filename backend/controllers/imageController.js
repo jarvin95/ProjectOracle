@@ -22,28 +22,29 @@ var options = {
 /*Call Isaac's function then send to DB*/
 exports.new_image = function(req, res, next){
 
-    var filename = req.files[0]['filename']
+    var filename = req.files[0]['filename'];
     var cameraId = req.body["cameraId"];
-    var img_path = "../backend/uploads/" + filename
+    var img_path = "../backend/uploads/" + filename;
+    var yoloErr;
 
     // start child yolo process
     var child = spawn('python3', ['process_image.py', img_path], options);
 
     // save all the outputs
     child.stdout.on('data', function(data) {
-        console.log(data.toString())
+        console.log(data.toString());
     });
 
     // log error if any
     child.stderr.on('data', function(data) {
         console.log("ERR child process: " + data.toString());
-        var yoloErr = "Generator Algorithm: " + data.toString();
+        yoloErr = "Generator Algorithm: " + data.toString();
     });
 
     // once child process ends, update SQL table
     child.on('close', function(code) {
         if (!yoloErr) {
-            res.json({"success":true})
+            res.json({"success":true});
         } else {
             res.json({"success":false, "message":yoloErr});
         }

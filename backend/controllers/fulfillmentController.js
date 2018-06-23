@@ -18,7 +18,7 @@ exports.fulfill = function (req, res, next) {
     var intent_name = req.body.queryResult.intent.name;
     console.log(param + " " + intent_name);
 
-    var query = "SELECT * FROM Object WHERE name = \'" + item_name;
+    var query = "SELECT * FROM Object WHERE name = \"" + item_name + "\"";
     con.query(query, function(err, result) {
         if (err) throw err;
         console.log(result);
