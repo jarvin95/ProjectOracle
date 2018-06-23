@@ -52,10 +52,10 @@ for c in crops:
 	
 	image = dict()
 	buffer = BytesIO()
-	c.save(buffer,format="JPEG") 
+	#c.save(buffer,format="JPEG") 
 	myimage = buffer.getvalue()
 	image["content"] = b64encode(myimage).decode()
-	c.save(str(time.time()) + ".jpg")
+	#c.save(str(time.time()) + ".jpg")
 	request["image"] = image
 	
 	features = []
