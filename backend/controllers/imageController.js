@@ -19,6 +19,17 @@ var options = {
 };
 
 
+var query1 = "SELECT `id` FROM Object WHERE name = \"" + item_string + "\";";
+con.query(query1, function (err, result1) {
+    if (err) throw err;
+    var query2 = "SELECT TOP 1 `reference_object` FROM Instance WHERE `parent_object_id` = \"" + result1 + "\";";
+    con.query(query2, function(err, result2) {
+        if (err) throw err;
+        return result2;
+    });
+});
+
+
 /*Call Isaac's function then send to DB*/
 exports.new_image = function(req, res, next){
 
@@ -26,13 +37,14 @@ exports.new_image = function(req, res, next){
     var cameraId = req.body["cameraId"];
     var img_path = "../backend/uploads/" + filename;
     var yoloErr;
+    var output;
 
     // start child yolo process
     var child = spawn('python3', ['process_image.py', img_path], options);
 
     // save all the outputs
     child.stdout.on('data', function(data) {
-        console.log(data.toString());
+        output = data.toString();
     });
 
     // log error if any
@@ -43,7 +55,44 @@ exports.new_image = function(req, res, next){
 
     // once child process ends, update SQL table
     child.on('close', function(code) {
-        if (!yoloErr) {
+        if (!yoloErr && output) {
+            var json_data = JSON.parse(output);
+            var selectObjectQuery = "SELECT * FROM Object WHERE `name` = ? AND `parent_camera_id` = ?";
+            var insertObjectQuery = "INSERT INTO Object (`name`, `parent_camera_id`) VALUES (?,?)"
+            var deleteInstanceQuery = "DELETE FROM Instance WHERE `parent_object_id` = ?";
+            var insertInstanceQuery = "INSERT INTO Instance (`parent_object_id`, `reference_object`, `bounding_box`) VALUES (?,?,?)"
+
+            for (var key in json_data) {
+                // check if object exists
+                con.query(selectObjectQuery, [key, cameraId], function(select_err, select_result) {
+                    
+                    // if exists, delete from instances, and update
+                    if (Object.keys(select_result).length) {
+                        con.query(deleteInstanceQuery, [select_result[0].id]);
+
+                        for (var index in json_data[key]) {
+                            var bounding_box = json_data[key][index].slice(0,5).join();
+                            var reference_object = json_data[key][index][6];
+
+                            con.query(insertInstanceQuery, [select_result[0].id, reference_object, bounding_box]);
+                        }
+
+                    } else {
+                        // else, create 
+                        con.query(insertObjectQuery, [key, cameraId], function(insert_err, insert_result) {
+                            if (!insert_err) {
+                                for (var index in json_data[key]) {
+                                    var bounding_box = json_data[key][index].slice(0,5).join();
+                                    var reference_object = json_data[key][index][6];
+
+                                    con.query(insertInstanceQuery, [insert_result.insertId, reference_object, bounding_box]);
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+
             res.json({"success":true});
         } else {
             res.json({"success":false, "message":yoloErr});
