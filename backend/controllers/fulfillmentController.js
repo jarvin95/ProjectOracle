@@ -22,7 +22,7 @@ exports.fulfill = function (req, res, next) {
     var response = "";
 
     console.log("retrieve start");
-    var query1 = "SELECT `id` FROM Object WHERE name = \"" + param + "\";";
+    var query1 = "SELECT `id` FROM `Object` WHERE `name` = \"" + param + "\" LIMIT 1;";
     con.query(query1, function (err, result1) {
         if (err) throw err;
         console.log("result1" + result1);
@@ -31,7 +31,7 @@ exports.fulfill = function (req, res, next) {
             console.log(responseObj(response));
             return res.json(responseObj(response));
         }
-        var query2 = "SELECT `reference_object` FROM Instance WHERE `parent_object_id` = \"" + result1 + "\" ORDER BY ID DESC LIMIT 1;";
+        var query2 = "SELECT `reference_object` FROM `Instance` WHERE `parent_object_id` = \"" + result1 + "\" ORDER BY ID DESC LIMIT 1;";
         con.query(query2, function (err, result2) {
             if (err) throw err;
             console.log("result2: " + result2);
