@@ -26,6 +26,7 @@ exports.fulfill = function (req, res, next) {
     con.query(query1, function (err, result1) {
         if (err) throw err;
         console.log("result1: " + result1);
+        console.log(result1);
         if (typeof(result1) === "undefined") {
             response = "I don't know what a " + param + " is.";
             console.log(responseObj(response));
@@ -35,7 +36,7 @@ exports.fulfill = function (req, res, next) {
         con.query(query2, function (err, result2) {
             if (err) throw err;
             console.log("result2: " + result2);
-            if (typeof(result2) === "undefined") {
+            if (typeof(result2) === undefined) {
                 response = param + " cannot be found.";
                 console.log(responseObj(response));
                 return res.json(responseObj(response));
