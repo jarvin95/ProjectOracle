@@ -61,22 +61,22 @@ exports.new_image = function(req, res, next){
                     if (select_result.length > 0) {
                         con.query(deleteInstanceQuery, [select_result[0].id]);
 
-                        console.log("Object exists, updating")
-                        for (var index in json_data[key]) {
-                            var bounding_box = json_data[key][index].slice(0,4).join();
-                            var reference_object = json_data[key][index][6];
+                        console.log(key + " exists, updating")
+                        for (var values in json_data[key]) {
+                            var bounding_box = values.slice(0,4).join();
+                            var reference_object = values[6];
 
                             con.query(insertInstanceQuery, [select_result[0].id, reference_object, bounding_box]);
                         }
 
                     } else {
                         // else, create 
-                        console.log("Object does not exist, creating")
+                        console.log(key + " does not exist, creating")
                         con.query(insertObjectQuery, [key, cameraId], function(insert_err, insert_result) {
                             if (!insert_err) {
-                                for (var index in json_data[key]) {
-                                    var bounding_box = json_data[key][index].slice(0,4).join();
-                                    var reference_object = json_data[key][index][6];
+                                for (var values in json_data[key]) {
+                                    var bounding_box = values.slice(0,4).join();
+                                    var reference_object = values[6];
 
                                     con.query(insertInstanceQuery, [insert_result.insertId, reference_object, bounding_box]);
                                 }
