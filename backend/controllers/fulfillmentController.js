@@ -25,6 +25,7 @@ exports.fulfill = function (req, res, next) {
     var query1 = "SELECT `id` FROM Object WHERE name = \"" + param + "\";";
     con.query(query1, function (err, result1) {
         if (err) throw err;
+        console.log("result1" + result1);
         if (typeof(result1) === undefined) {
             response = "I don't know what a " + param + " is.";
             console.log(responseObj(response));
@@ -33,6 +34,7 @@ exports.fulfill = function (req, res, next) {
         var query2 = "SELECT `reference_object` FROM Instance WHERE `parent_object_id` = \"" + result1 + "\" ORDER BY ID DESC LIMIT 1;";
         con.query(query2, function (err, result2) {
             if (err) throw err;
+            console.log("result2: " + result2);
             if (typeof(result2) === undefined) {
                 response = param + " cannot be found.";
                 console.log(responseObj(response));
@@ -46,14 +48,17 @@ exports.fulfill = function (req, res, next) {
 };
 
 function responseObj(response) {
-    return {"fulfillmentText": " ",
-    "fulfillmentMessages": [
-        {
-            "text": {
-                "text": [response]
+    var responseObj = {
+        "fulfillmentText": " ",
+        "fulfillmentMessages": [
+            {
+                "text": {
+                    "text": [response]
+                }
             }
-        }
-    ],
-    "source": "Oracle by jr.io"}
+        ],
+        "source": "Oracle by jr.io"
+    };
+    return responseObj;
 }
 
