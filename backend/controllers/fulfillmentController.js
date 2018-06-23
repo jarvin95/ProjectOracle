@@ -31,7 +31,7 @@ exports.fulfill = function (req, res, next) {
         ],
         "source": "Oracle by jr.io"
     };
-
+    console.log(responseObj);
     return res.json(responseObj);
 };
 
@@ -40,13 +40,13 @@ function retrieve(item_string) {
     var query1 = "SELECT `id` FROM Object WHERE name = \"" + item_string + "\";";
     con.query(query1, function (err, result1) {
         if (err) throw err;
-        if (typeof(result1) === "undefined") {
+        if (typeof(result1) === undefined) {
             return "";
         }
         var query2 = "SELECT `reference_object` FROM Instance WHERE `parent_object_id` = \"" + result1 + "\" ORDER BY ID DESC LIMIT 1;";
         con.query(query2, function(err, result2) {
             if (err) throw err;
-            if (typeof(result2) === "undefined") {
+            if (typeof(result2) === undefined) {
                 return "";
             }
             return result2;
@@ -56,9 +56,8 @@ function retrieve(item_string) {
 }
 
 function generate_message(item_string, item_location) {
-    if (item_location === "") {
+    if (typeof(item_location) === undefined || item_location === undefined) {
         return item_string + " cannot be found."
     }
-    console.log(item_string + " is " + item_location);
     return item_string + " is " + item_location;
 }
