@@ -14,7 +14,7 @@ var spawn = require("child_process").spawn;
 
 
 var options = {
-    cwd: process.cwd(),
+    cwd: '/home/ashiswin/Documents/ProjectOracle/image_processing/',
     env: process.env
 };
 
