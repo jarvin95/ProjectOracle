@@ -6,26 +6,32 @@ const connection = {
 };
 
 const mysql = require('mysql');
-const con = mysql.createConnection(connection)
+const con = mysql.createConnection(connection);
 
 con.connect();
 
 var spawn = require("child_process").spawn;
 
+
 var options = {
     cwd: process.cwd(),
-    env: process.env,
+    env: process.env
 };
 
 
 
+
 /*Call Isaac's function then send to DB*/
-exports.new_image = function(req,res,next){
-    // res.send()
-    imageBase64 = req.body["imageBase64"];
-    width = req.body["width"];
-    height = req.body["height"];
-    cameraId = req.body["cameraId"];
+exports.new_image = function(req, res, next){
+
+  /*  var imageBase64 = req.body["imageBase64"];
+    var width = req.body["width"];
+    var height = req.body["height"];
+    var cameraId = req.body["cameraId"];
+*/
+    console.log(req)
+    res.send("OK")
+
     // start child yolo process
 /*    var child = spawn('python3', ['process_image.py', imageBase64, width, height,cameraId], options);
 
@@ -52,7 +58,16 @@ exports.new_image = function(req,res,next){
 
 /*Query DB*/
 exports.query = function(req,res,next){
-    res.send("QUERY DB")
+
+    var queryString = "SELECT * FROM Object"
+    con.query( queryString , function( err , result ){
+        if (err){res.send(err)}
+
+        else {
+            res.json(result)
+        }
+    })
+
 };
 
 /*exports.read_result_from_id = function (req, res, next) {
