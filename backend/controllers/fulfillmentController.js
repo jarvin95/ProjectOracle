@@ -11,75 +11,44 @@ var con = mysql.createConnection(connection);
 con.connect();
 
 exports.fulfill = function (req, res, next) {
-    console.log("fulfill");
-    var param = req.body.queryResult.parameters.param;
-    var item_name = 'wallet';
-    // var item_name = req.body.queryResult.parameters.item;
-    var intent_name = req.body.queryResult.intent.name;
-    console.log(param + " " + intent_name);
+    if (req.body === 'undefined') {
+        return res.sendStatus(400);
+    }
+    var intent_name = req.body.queryResult.intent.name; // TODO: Check if intent is get_item intent if there is more than one intent
 
-    var query = "SELECT * FROM Object WHERE name = \"" + item_name + "\"";
-    /*var query = "SELECT * FROM Object WHERE name = \'" + item_name;
-    con.query(query, function(err, result) {
-        if (err) throw err;
-        console.log(result);
-        res.json(result);
-    })*/
-
-    var response = {
-        "fulfillmentText": "This is a text response",
+    res.setHeader('Content-Type', 'application/json');
+    console.log(req.body);
+    var param = req.body.queryResult.parameters['item'];
+    var response = generate_message(param, retrieve(param));
+    var responseObj = {
+        "fulfillmentText": response,
         "fulfillmentMessages": [
             {
-                "card": {
-                    "title": "card title",
-                    "subtitle": "card text",
-                    "imageUri": "https://assistant.google.com/static/images/molecule/Molecule-Formation-stop.png",
-                    "buttons": [
-                        {
-                            "text": "button text",
-                            "postback": "https://assistant.google.com/"
-                        }
-                    ]
+                "text": {
+                    "text": [message]
                 }
             }
         ],
-        "source": "example.com",
-        "payload": {
-            "google": {
-                "expectUserResponse": true,
-                "richResponse": {
-                    "items": [
-                        {
-                            "simpleResponse": {
-                                "textToSpeech": "this is a simple response"
-                            }
-                        }
-                    ]
-                }
-            },
-            "facebook": {
-                "text": "Hello, Facebook!"
-            },
-            "slack": {
-                "text": "This is a text response for Slack."
-            }
-        },
-        "outputContexts": [
-            {
-                "name": "projects/${PROJECT_ID}/agent/sessions/${SESSION_ID}/contexts/context name",
-                "lifespanCount": 5,
-                "parameters": {
-                    "param": "param value"
-                }
-            }
-        ],
-        "followupEventInput": {
-            "name": "event name",
-            "languageCode": "en-US",
-            "parameters": {
-                "param": "param value"
-            }
-        }
+        "source": "Oracle by jr.io"
     };
-    res.send(response);
+
+    return res.json(responseObj);
 };
+
+function retrieve(item_string) {
+    console.log("retrieve start");
+    var query1 = "SELECT `id` FROM Object WHERE name = \"" + item_string + "\";";
+    con.query(query1, function (err, result1) {
+        if (err) throw err;
+        var query2 = "SELECT TOP 1 `reference_object` FROM Instance WHERE `parent_object_id` = \"" + result1 + "\";";
+        con.query(query2, function(err, result2) {
+            if (err) throw err;
+            return result2;
+        });
+    });
+    console.log("retrieve end");
+}
+
+function generate_message(item_string, item_location) {
+    return item_string + " is " + item_location;
+}
