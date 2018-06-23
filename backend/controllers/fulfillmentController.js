@@ -47,30 +47,13 @@ exports.fulfill = function (req, res, next) {
     });
 };
 
-/*function responseObj(response) {
+function responseObj(response) {
     var responseObj = {
-        "fulfillmentText": " ",
+        "fulfillmentText": "test",
         "fulfillmentMessages": [
             {
                 "text": {
                     "text": [response]
-                }
-            }
-        ],
-        "source": "Oracle by jr.io"
-    };
-    return responseObj;
-}*/
-
-function responseObj(response) {
-    var responseObj = {
-        "fulfillmentText": " ",
-        "fulfillmentMessages": [
-            {
-                "card": {
-                    "title": "Test Title",
-                    "subtitle": "test"
-
                 }
             }
         ],
