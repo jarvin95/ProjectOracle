@@ -19,13 +19,13 @@ exports.fulfill = function (req, res, next) {
     res.setHeader('Content-Type', 'application/json');
     console.log(req.body);
     var param = req.body.queryResult.parameters['item'];
-    var response = generate_message(param, retrieve(param));
+    //var response = generate_message(param, retrieve(param));
     var responseObj = {
-        "fulfillmentText": response,
+        "fulfillmentText": "response",
         "fulfillmentMessages": [
             {
                 "text": {
-                    "text": [message]
+                    "text": ["message"]
                 }
             }
         ],
