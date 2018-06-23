@@ -49,14 +49,7 @@ exports.fulfill = function (req, res, next) {
 
 function responseObj(response) {
     var responseObj = {
-        "fulfillmentText": "test",
-        "fulfillmentMessages": [
-            {
-                "text": {
-                    "text": [response]
-                }
-            }
-        ],
+        "fulfillmentText": response,
         "source": "Oracle by jr.io"
     };
     return responseObj;
