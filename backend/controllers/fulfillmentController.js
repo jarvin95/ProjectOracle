@@ -103,7 +103,7 @@ function responseObj(array_of_positions, param) {
             })
         });
         while(items.size !== array_of_positions.length) {
-            console.log(items.size);
+            console.log("A: " + items.size);
             console.log(array_of_positions.length);
         }
         return {
