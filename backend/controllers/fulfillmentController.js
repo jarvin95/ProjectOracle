@@ -60,26 +60,8 @@ exports.fulfill = function (req, res, next) {
             console.log(array_of_positions);
 
             console.log(responseObj(array_of_positions, param));
-
-
-
-            if (array_of_positions.length === 0) {
-                response = "I don't see your " + param + " anywhere.";
-                console.log(responseObj(response, param));
-                return res.json(responseObj(response, param));
-            }
-            else if(array_of_positions.length === 1) {
-                response = "I found your " + param + " on or around " + position + " in the living room.";
-                console.log(responseObj(response, param));
-                return res.json(responseObj(response, param));
-            }
-            else {
-                response = "I found " + array_of_positions.length + " " + param + ". Which one do you want me to find?"
-                console.log(responseObj(response, param));
-
-            }
+            return responseObj(array_of_positions, param);
         });
-
     });
 };
 
@@ -92,7 +74,6 @@ function responseObj(array_of_positions, param) {
             "source": "Oracle by jr.io"
         };
     }
-
     else if(array_of_positions.length === 1) {
         response = "I found your " + param + " on or around " + array_of_positions[0] + " in the living room.";
         return {
