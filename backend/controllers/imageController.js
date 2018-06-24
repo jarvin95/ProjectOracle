@@ -157,15 +157,44 @@ exports.latest_cam = function(req, res, next) {
 
 exports.obj_crops = function(req, res, next) {
 
-    gm('./uploads/cam-2')
-        .crop(100, 100, 0, 0)
-        .write('./tmp.jpg', (err) => {
-            if (err) {
-                console.log(err); 
-            } else {
-                res.sendFile(path.resolve('./tmp.jpg'));
-            }
-        });
+    var objName = req.params.objName;
+    var index = req.params.objIndex;
+    var selectObjectQuery = "SELECT id FROM Object WHERE `name` =? AND `parent_camera_id`=2";
+    var selectInstanceQuery = "SELECT * FROM Instance WHERE `parent_object_id` = ?";
+
+    con.query(selectObjectQuery, [objName], function(err, result) {
+        if (result.length > 0) {
+            
+            // get latest image
+            var filename = "./uploads/obj-" + result[0].id;    
+
+            // crop instance and return
+            con.query(selectInstanceQuery, [result[0].id], function (select_err, select_result) {
+
+                if (select_result[index]) {
+                    var bounding_str = select_result[index].bounding_box;
+                    var bounding_list = bounding_str.split(',');
+
+                    var width = bounding_list[2] - bounding_list[0];
+                    var height = bounding_list[3] - bounding_list[1];
+                    var x = bounding_list[0];
+                    var y = bounding_list[1];
+
+                    gm(filename)
+                        .crop(width, height, x, y)
+                        .write('./tmp.jpg', (err) => {
+                            if (err) {
+                                console.log(err); 
+                            } else {
+                                res.sendFile(path.resolve('./tmp.jpg'));
+                            }
+                        });
+                }
+            });
+        } else { 
+            res.json({'success': false, 'message': 'object not found'});
+        }
+    });
 }
 
 /*exports.read_result_from_id = function (req, res, next) {
