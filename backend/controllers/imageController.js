@@ -158,9 +158,11 @@ exports.obj_crops = function(req, res, next) {
 
     var img = gm('./uploads/cam-2')
                 .crop(233, 233,29,26)
-                .then(function() {
-                    res.writeHead(200, {'Content-Type': 'image/jpg'});
-                    res.end(img, 'binary');
+                .stream(function streamOut (err, stdout, stderr) {
+                    if (err) return next(err);
+
+                    stdout.pipe(res);
+                    stdout.on('error', next);
                 });
 }
 
