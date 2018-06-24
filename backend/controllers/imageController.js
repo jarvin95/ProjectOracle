@@ -163,7 +163,7 @@ exports.obj_crops = function(req, res, next) {
             if (err) {
                 console.log(err); 
             } else {
-                res.sendFile(path.resolve('../tmp.jpg') , { root: __dirname });
+                res.sendFile(path.resolve('./tmp.jpg') , { root: __dirname });
             }
         });
 }
