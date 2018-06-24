@@ -85,11 +85,44 @@ function responseObj(response, object_name) {
                             "simpleResponse": {
                                 "textToSpeech": response
                             }
+                        },
+                        {
+                            "carouselBrowse": {
+                                "items": [
+                                    {
+                                        "title": "Title of item 1",
+                                        "description": "Description of item 1",
+                                        "footer": "Item 1 footer",
+                                        "image": {
+                                            "url": "https://www.gstatic.com/mobilesdk/170329_assistant/assistant_color_96dp.png",
+                                            "accessibilityText": "Google Assistant Bubbles"
+                                        },
+                                        "openUrlAction": {
+                                            "url": "https://github.com"
+                                        }
+                                    },
+                                    {
+                                        "title": "Title of item 2",
+                                        "description": "Description of item 2",
+                                        "footer": "Item 2 footer",
+                                        "image": {
+                                            "url": "https://www.gstatic.com/mobilesdk/170329_assistant/assistant_color_96dp.png",
+                                            "accessibilityText": "Google Assistant Bubbles"
+                                        },
+                                        "openUrlAction": {
+                                            "url": "https://google.com"
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     ]
                 }
             }
-        }
+        },
+        "outputContexts": [
+
+        ]
     };
     return responseObj;
 }
