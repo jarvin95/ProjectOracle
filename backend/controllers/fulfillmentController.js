@@ -80,81 +80,8 @@ function responseObj(array_of_positions, param) {
         response = "I found your " + param + " on or around " + array_of_positions[0] + " in the living room.";
         console.log(response);
         return {
-            "conversationToken": "",
-            "expectUserResponse": true,
-            "expectedInputs": [
-                {
-                    "inputPrompt": {
-                        "initialPrompts": [
-                            {
-                                "textToSpeech": "Alright! " + response
-                            }
-                        ],
-                        "noInputPrompts": []
-                    },
-                    "possibleIntents": [
-                        {
-                            "intent": "actions.intent.OPTION",
-                            "inputValueData": {
-                                "@type": "type.googleapis.com/google.actions.v2.OptionValueSpec",
-                                "carouselSelect": {
-                                    "items": [
-                                        {
-                                            "optionInfo": {
-                                                "key": "MATH_AND_PRIME",
-                                                "synonyms": [
-                                                    "math",
-                                                    "math and prime",
-                                                    "prime numbers",
-                                                    "prime"
-                                                ]
-                                            },
-                                            "title": "Math & prime numbers",
-                                            "description": "42 is an abundant number because the sum of its proper divisors 54 is greater…",
-                                            "image": {
-                                                "url": "http://https://lh6.googleusercontent.com/-AV-CUWg1Ulo/AAAAAAAAAAI/AAAAAAAANp4/GKLLzwRD8zs/photo.jpg?sz=64",
-                                                "accessibilityText": "Math & prime numbers"
-                                            }
-                                        },
-                                        {
-                                            "optionInfo": {
-                                                "key": "EGYPT",
-                                                "synonyms": [
-                                                    "religion",
-                                                    "egpyt",
-                                                    "ancient egyptian"
-                                                ]
-                                            },
-                                            "title": "Ancient Egyptian religion",
-                                            "description": "42 gods who ruled on the fate of the dead in the afterworld. Throughout the under…",
-                                            "image": {
-                                                "url": "https://lh6.googleusercontent.com/-AV-CUWg1Ulo/AAAAAAAAAAI/AAAAAAAANp4/GKLLzwRD8zs/photo.jpg?sz=64",
-                                                "accessibilityText": "Egypt"
-                                            }
-                                        },
-                                        {
-                                            "optionInfo": {
-                                                "key": "RECIPES",
-                                                "synonyms": [
-                                                    "recipes",
-                                                    "recipe",
-                                                    "42 recipes"
-                                                ]
-                                            },
-                                            "title": "42 recipes with 42 ingredients",
-                                            "description": "Here's a beautifully simple recipe that's full of flavor! All you need is some ginger and…",
-                                            "image": {
-                                                "url": "https://lh6.googleusercontent.com/-AV-CUWg1Ulo/AAAAAAAAAAI/AAAAAAAANp4/GKLLzwRD8zs/photo.jpg?sz=64",
-                                                "accessibilityText": "Recipe"
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    ]
-                }
-            ]
+            "fulfillmentText": response,
+            "source": "Oracle by jr.io"
         };
     }
     else {
@@ -175,7 +102,7 @@ function responseObj(array_of_positions, param) {
                 }
             })
         });
-
+        while(items.size !== array_of_positions.length) {}
         return {
             "conversationToken": "",
             "expectUserResponse": true,
