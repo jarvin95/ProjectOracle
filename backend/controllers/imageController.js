@@ -11,7 +11,7 @@ const con = mysql.createConnection(connection);
 con.connect();
 
 var spawn = require("child_process").spawn;
-
+var fs = require('fs');
 
 var options = {
     cwd: '/home/ashiswin/Documents/ProjectOracle/image_processing/',
@@ -56,10 +56,14 @@ exports.new_image = function(req, res, next){
                 // check if object exists
                 console.log("Check whether " + key + " exists in Objects")
                 con.query(selectObjectQuery, [key, cameraId], function(select_err, select_result) {
-                    
+
                     // if exists, delete from instances, and update
                     if (select_result.length > 0) {
                         con.query(deleteInstanceQuery, [select_result[0].id]);
+
+                        // update object latest photo
+                        parent_img_path = './uploads/' + filename;
+                        fs.createReadStream(parent_img_path).pipe(fs.createWriteStream('./uploads/obj-' + select_result[0].id));
 
                         console.log(key + " exists, updating")
                         for (var index in json_data[key]) {
@@ -74,17 +78,27 @@ exports.new_image = function(req, res, next){
                         console.log(key + " does not exist, creating")
                         con.query(insertObjectQuery, [key, cameraId], function(insert_err, insert_result) {
                             if (!insert_err) {
+                                
+                                // update object latest photo
+                                parent_img_path = './uploads/' + filename;
+                                fs.createReadStream(parent_img_path).pipe(fs.createWriteStream('./uploads/obj-' + insert_result.insertId));
+
                                 for (var index in json_data[key]) {
                                     var bounding_box = json_data[key][index].slice(0,4).join();
                                     var reference_object = json_data[key][index][6];
 
                                     con.query(insertInstanceQuery, [insert_result.insertId, reference_object, bounding_box]);
                                 }
+
                             } else {
                                 console.log(insert_err);
                             }
                         });
                     }
+
+                    // update camera latest photo
+                    parent_img_path = './uploads/' + filename;
+                    fs.createReadStream(parent_img_path).pipe(fs.createWriteStream('./uploads/cam-' + cameraId));
                 });
             });
 
