@@ -38,11 +38,11 @@ exports.fulfill = function (req, res, next) {
             var position = result2[0].reference_object;
             console.log("result2: " + position);
             if (typeof(position) === undefined) {
-                response = "Your" + param + " cannot be found.";
+                response = "Your" + param + " cannot be found";
                 console.log(responseObj(response, param));
                 return res.json(responseObj(response, param));
             }
-            response = "Your " + param + " is " + position;
+            response = "Your " + param + " is " + position + " in the living room";
             console.log(responseObj(response, param));
             return res.json(responseObj(response, param));
         });
