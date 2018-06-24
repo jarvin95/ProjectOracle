@@ -159,8 +159,12 @@ exports.obj_crops = function(req, res, next) {
     res.writeHead(200, {'Content-Type': 'image/jpg'});
     var img = gm('./uploads/cam-2')
                 .crop(0,0, 50,50)
-                .write(res, function(err) {
-                    console.log(err);
+                .stream('jpg', function (err, stdout, stderr) {
+                    if (err) {
+                        console.log(err);
+                        return next(err);
+                    }
+                    stdout.pipe(res);
                 });
 }
 
