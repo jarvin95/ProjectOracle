@@ -59,7 +59,9 @@ exports.fulfill = function (req, res, next) {
             });
             console.log(array_of_positions);
 
-            return responseObj(array_of_positions, param);
+            var r =  responseObj(array_of_positions, param);
+            console.log(r);
+            return r;
         });
     });
 };
