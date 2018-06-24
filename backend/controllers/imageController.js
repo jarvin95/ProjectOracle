@@ -75,7 +75,7 @@ exports.new_image = function(req, res, next){
 
                     } else {
                         // else, create 
-                        console.log(key + " does not exist, creating")
+                        console.log(key + " does not exist, creating");
                         con.query(insertObjectQuery, [key, cameraId], function(insert_err, insert_result) {
                             if (!insert_err) {
                                 

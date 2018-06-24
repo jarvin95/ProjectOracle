@@ -29,8 +29,8 @@ exports.fulfill = function (req, res, next) {
         console.log("result1: " + object_id);
         if (typeof(object_id) === undefined) {
             response = "I don't know what a " + param + " is.";
-            console.log(responseObj(response));
-            return res.json(responseObj(response));
+            console.log(responseObj(response, param));
+            return res.json(responseObj(response, param));
         }
         var query2 = "SELECT `reference_object` FROM `Instance` WHERE `parent_object_id` = \"" + object_id + "\" ORDER BY ID DESC LIMIT 1;";
         con.query(query2, function (err, result2) {
@@ -38,22 +38,38 @@ exports.fulfill = function (req, res, next) {
             var position = result2[0].reference_object;
             console.log("result2: " + position);
             if (typeof(position) === undefined) {
-                response = param + " cannot be found.";
-                console.log(responseObj(response));
-                return res.json(responseObj(response));
+                response = "Your" + param + " cannot be found.";
+                console.log(responseObj(response, param));
+                return res.json(responseObj(response, param));
             }
-            response = param + " is " + position;
-            console.log(responseObj(response));
-            return res.json(responseObj(response));
+            response = "Your " + param + " is " + position;
+            console.log(responseObj(response, param));
+            return res.json(responseObj(response, param));
         });
     });
 };
 
-function responseObj(response) {
+/*function responseObj(response) {
     var responseObj = {
         "fulfillmentText": response,
         "source": "Oracle by jr.io"
     };
     return responseObj;
-}
+}*/
 
+function responseObj(response, object_name) {
+    var responseObj = {
+        "fulfillmentText": response,
+        "fulfillmentMessages": [
+            {
+                "card": {
+                    "title": "Your " + object_name,
+                    "subtitle": response,
+                    "imageUri": "https://shinola.imgix.net/media/catalog/product/1/0/10009507_Slim_Bi-Fold_Wallet_Black_V1_3840H.png?bg=f7f7f7&fm=jpg&h=900&ixlib=php-1.1.0&q=90&w=1920"
+                }
+            }
+        ],
+        "source": "Oracle by jr.io"
+    };
+    return responseObj;
+}
