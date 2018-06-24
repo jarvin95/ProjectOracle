@@ -55,7 +55,7 @@ exports.fulfill = function (req, res, next) {
             if (err) throw err;
             var array_of_positions = [];
             result2.forEach(function(element) {
-                array_of_positions.push(element.reference_object)
+                array_of_positions.push(element.reference_object);
             });
             console.log(array_of_positions);
 
@@ -79,6 +79,10 @@ function responseObj(array_of_positions, param) {
         response = "I found your " + param + " on or around " + array_of_positions[0] + " in the living room.";
         console.log(response);
         return {
+            "fulfillmentText": response,
+            "source": "Oracle by jr.io"
+        };
+        /*return {
             "conversationToken": "",
             "expectUserResponse": false,
             "expectedInputs": [
@@ -103,7 +107,7 @@ function responseObj(array_of_positions, param) {
                     }
                 }
             ]
-        };
+        };*/
     }
     else {
         response = "I found " + array_of_positions.length + " " + param + ". Which one do you want me to find?"
