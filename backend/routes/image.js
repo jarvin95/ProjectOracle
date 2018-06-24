@@ -16,4 +16,7 @@ router.get('/latest_obj/:objName', imageController.latest_obj);
 // Get latest camera image
 router.get('/latest_cam', imageController.latest_cam);
 
+// Get crops
+router.get('/get_crops', imageController.obj_crops);
+
 module.exports = router;
