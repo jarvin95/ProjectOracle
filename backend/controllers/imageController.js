@@ -171,23 +171,25 @@ exports.obj_crops = function(req, res, next) {
             // crop instance and return
             con.query(selectInstanceQuery, [result[0].id], function (select_err, select_result) {
 
-                var bounding_str = select_result[index].bounding_box;
-                var bounding_list = bounding_str.split(',');
+                if (select_result[index]) {
+                    var bounding_str = select_result[index].bounding_box;
+                    var bounding_list = bounding_str.split(',');
 
-                var width = bounding_list[2] - bounding_list[0];
-                var height = bounding_list[3] - bounding_list[1];
-                var x = bounding_list[0];
-                var y = bounding_list[1];
-                
-                gm(filename)
-                    .crop(width, height, x, y)
-                    .write('./tmp.jpg', (err) => {
-                        if (err) {
-                            console.log(err); 
-                        } else {
-                            res.sendFile(path.resolve('./tmp.jpg'));
-                        }
-                    });
+                    var width = bounding_list[2] - bounding_list[0];
+                    var height = bounding_list[3] - bounding_list[1];
+                    var x = bounding_list[0];
+                    var y = bounding_list[1];
+
+                    gm(filename)
+                        .crop(width, height, x, y)
+                        .write('./tmp.jpg', (err) => {
+                            if (err) {
+                                console.log(err); 
+                            } else {
+                                res.sendFile(path.resolve('./tmp.jpg'));
+                            }
+                        });
+                }
             });
         } else { 
             res.json({'success': false, 'message': 'object not found'});
