@@ -123,6 +123,25 @@ exports.query = function(req,res,next){
 
 };
 
+exports.latest_obj = function(req, res, next) {
+
+    var objName = req.params.objName;
+    var cameraId = 2;
+    var queryString = "SELECT `id` FROM Object WHERE `name` = ? AND `parent_camera_id` = ?";
+
+    con.query(queryString, [objName, cameraId], function(err, result){
+        
+        if (result.length > 0) {
+            var filename = "./uploads/obj-" + result[0].id;    
+            var img = fs.readFileSync(filename);
+            res.writeHead('Content-Type': 'image/jpg');
+            res.end(img, 'binary');
+        } else {
+            res.json({'success': false, 'message': 'object not found'});
+        }
+    });
+}
+
 /*exports.read_result_from_id = function (req, res, next) {
     // Return all Result
     if (typeof(req.query) === "undefined" || typeof (req.query.id) === "undefined") {

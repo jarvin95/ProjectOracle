@@ -10,4 +10,8 @@ router.post('/new', upload.any(), imageController.new_image);
 /* Query DB with input params*/
 router.get('/', imageController.query);
 
+// Get latest object image
+router.get('/latest_obj/:objName', imageController.latest_obj);
+
+
 module.exports = router;
