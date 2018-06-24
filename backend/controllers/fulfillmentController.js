@@ -61,8 +61,6 @@ exports.fulfill = function (req, res, next) {
 
             var r =  responseObj(array_of_positions, param);
             console.log(r);
-            console.log(r.expectedInputs[0].inputPrompt);
-            console.log(r.expectedInputs[0].possibleIntents);
             res.json(r);
         });
     });
