@@ -160,12 +160,8 @@ exports.obj_crops = function(req, res, next) {
     var img = gm('./uploads/cam-2')
                 .setFormat("jpg")
                 .crop(100,100, 0, 0)
-                .stream('jpg', function (err, stdout, stderr) {
-                    if (err) {
-                        console.log(err);
-                        return next(err);
-                    }
-                    stdout.pipe(res);
+                .write(res, function(err) {
+                    if (err) console.log(err);
                 });
 }
 
