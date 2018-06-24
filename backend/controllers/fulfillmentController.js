@@ -35,7 +35,7 @@ exports.fulfill = function (req, res, next) {
             console.log(responseObj(response, param));
             return res.json(responseObj(response, param));
         }
-        var query2 = "SELECT `reference_object` FROM `Instance` WHERE `parent_object_id` = \"" + object_id + "\" ORDER BY ID DESC LIMIT 1;";
+        /*var query2 = "SELECT `reference_object` FROM `Instance` WHERE `parent_object_id` = \"" + object_id + "\" ORDER BY ID DESC LIMIT 1;";
         con.query(query2, function (err, result2) {
             if (err) throw err;
             var position = result2[0].reference_object;
@@ -45,12 +45,117 @@ exports.fulfill = function (req, res, next) {
                 console.log(responseObj(response, param));
                 return res.json(responseObj(response, param));
             }
-            response = "Your " + param + " is " + position + " in the living room";
+            response = "I found your " + param + " on or around " + position + " in the living room";
             console.log(responseObj(response, param));
             return res.json(responseObj(response, param));
+        });*/
+
+        var query2 = "SELECT `reference_object` FROM `Instance` WHERE `parent_object_id` = \"" + object_id + "\" ORDER BY ID DESC;";
+        con.query(query2, function (err, result2) {
+            if (err) throw err;
+            var array_of_positions = [];
+            result2.forEach(function(element) {
+                array_of_positions.push(element.reference_object);
+            });
+            console.log(array_of_positions);
+
+            return responseObj(array_of_positions, param);
         });
     });
 };
+
+function responseObj(array_of_positions, param) {
+    var response = "";
+    if (array_of_positions.length === 0) {
+        response = "I don't see your " + param + " anywhere.";
+        console.log(response);
+        return {
+            "fulfillmentText": response,
+            "source": "Oracle by jr.io"
+        };
+    }
+    else if(array_of_positions.length === 1) {
+        response = "I found your " + param + " on or around " + array_of_positions[0] + " in the living room.";
+        console.log(response);
+        return {
+            "fulfillmentText": response,
+            "source": "Oracle by jr.io"
+        };
+        /*return {
+            "conversationToken": "",
+            "expectUserResponse": false,
+            "expectedInputs": [
+                {
+                    "inputPrompt": {
+                        "richInitialPrompt": {
+                            "items": [
+                                {
+                                    "basicCard": {
+                                        "title": array_of_positions[0],
+                                        "formattedText": response,
+                                        "image": {
+                                            "url": "https://example.google.com/42.png",
+                                            "accessibilityText": "Image alternate text"
+                                        },
+                                        "imageDisplayOptions": "CROPPED"
+                                    }
+                                }
+                            ],
+                            "suggestions": []
+                        }
+                    }
+                }
+            ]
+        };*/
+    }
+    else {
+        response = "I found " + array_of_positions.length + " " + param + ". Which one do you want me to find?"
+        console.log(response);
+        var items = [];
+        var count = 0;
+        array_of_positions.forEach(function(element) {
+            items.push({
+                "optionInfo": {
+                    "key": param + count
+                },
+                "title": param + count,
+                "description": element,
+                "image": {
+                    "url": "http://example.com/math_and_prime.jpg",
+                    "accessibilityText": "Math & prime numbers"
+                }
+            })
+        });
+
+        return {
+            "conversationToken": "",
+            "expectUserResponse": true,
+            "expectedInputs": [
+                {
+                    "inputPrompt": {
+                        "initialPrompts": [
+                            {
+                                "textToSpeech": response
+                            }
+                        ],
+                        "noInputPrompts": []
+                    },
+                    "possibleIntents": [
+                        {
+                            "intent": "actions.intent.OPTION",
+                            "inputValueData": {
+                                "@type": "type.googleapis.com/google.actions.v2.OptionValueSpec",
+                                "carouselSelect": {
+                                    "items": items
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        };
+    }
+}
 
 /*function responseObj(response) {
     var responseObj = {
@@ -60,6 +165,7 @@ exports.fulfill = function (req, res, next) {
     return responseObj;
 }*/
 
+/*
 function responseObj(response, object_name) {
     var responseObj = {
         "fulfillmentText": response,
@@ -129,3 +235,15 @@ function responseObj(response, object_name) {
     };
     return responseObj;
 }
+*/
+/*
+
+function responseObj(response) {
+    var responseObj = {
+        "fulfillmentText": response,
+        "source": "Oracle by jr.io"
+    };
+    return responseObj;
+}
+*/
+
