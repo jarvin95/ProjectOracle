@@ -115,38 +115,6 @@ function responseObj(array_of_positions, param) {
                                                 "url": "http://https://lh6.googleusercontent.com/-AV-CUWg1Ulo/AAAAAAAAAAI/AAAAAAAANp4/GKLLzwRD8zs/photo.jpg?sz=64",
                                                 "accessibilityText": "Math & prime numbers"
                                             }
-                                        },
-                                        {
-                                            "optionInfo": {
-                                                "key": "EGYPT",
-                                                "synonyms": [
-                                                    "religion",
-                                                    "egpyt",
-                                                    "ancient egyptian"
-                                                ]
-                                            },
-                                            "title": "Ancient Egyptian religion",
-                                            "description": "42 gods who ruled on the fate of the dead in the afterworld. Throughout the under…",
-                                            "image": {
-                                                "url": "https://lh6.googleusercontent.com/-AV-CUWg1Ulo/AAAAAAAAAAI/AAAAAAAANp4/GKLLzwRD8zs/photo.jpg?sz=64",
-                                                "accessibilityText": "Egypt"
-                                            }
-                                        },
-                                        {
-                                            "optionInfo": {
-                                                "key": "RECIPES",
-                                                "synonyms": [
-                                                    "recipes",
-                                                    "recipe",
-                                                    "42 recipes"
-                                                ]
-                                            },
-                                            "title": "42 recipes with 42 ingredients",
-                                            "description": "Here's a beautifully simple recipe that's full of flavor! All you need is some ginger and…",
-                                            "image": {
-                                                "url": "https://lh6.googleusercontent.com/-AV-CUWg1Ulo/AAAAAAAAAAI/AAAAAAAANp4/GKLLzwRD8zs/photo.jpg?sz=64",
-                                                "accessibilityText": "Recipe"
-                                            }
                                         }
                                     ]
                                 }
