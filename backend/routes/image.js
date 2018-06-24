@@ -13,5 +13,7 @@ router.get('/', imageController.query);
 // Get latest object image
 router.get('/latest_obj/:objName', imageController.latest_obj);
 
+// Get latest camera image
+router.get('/latest_cam', imageController.latest_cam);
 
 module.exports = router;
