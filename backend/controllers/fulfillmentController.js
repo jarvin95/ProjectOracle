@@ -108,7 +108,12 @@ function responseObj(array_of_positions, param) {
                                 }
                             ]
                         }
-                    }
+                    },
+                    "possibleIntents": [
+                        {
+                            "intent": "assistant.intent.action.TEXT"
+                        }
+                    ]
                 }
             ]
         };
