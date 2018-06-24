@@ -12,6 +12,7 @@ con.connect();
 
 var spawn = require("child_process").spawn;
 var fs = require('fs');
+var gm = require('gm').subClass({ imageMagick: true });
 
 var options = {
     cwd: '/home/ashiswin/Documents/ProjectOracle/image_processing/',
@@ -152,6 +153,15 @@ exports.latest_cam = function(req, res, next) {
     res.end(img, 'binary');
 }
 
+
+exports.obj_crops = function(req, res, next) {
+
+    var img = gm('./uploads/cam-2')
+                .crop(233, 233,29,26);
+
+    res.writeHead(200, {'Content-Type': 'image/jpg'});
+    res.end(img, 'binary');
+}
 
 /*exports.read_result_from_id = function (req, res, next) {
     // Return all Result
