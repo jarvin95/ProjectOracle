@@ -165,6 +165,7 @@ exports.obj_crops = function(req, res, next) {
                         return next(err);
                     }
                     stdout.pipe(res);
+                    res.end();
                 });
 }
 
