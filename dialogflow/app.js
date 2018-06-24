@@ -43,7 +43,7 @@ app.intent('Default Fallback Intent', conv => {
 
 
 var port = normalizePort('8080');
-app.set('port', port);
+e.set('port', port);
 
 /**
  * Create HTTP server.
