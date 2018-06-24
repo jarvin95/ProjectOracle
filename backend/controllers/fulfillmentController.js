@@ -87,14 +87,9 @@ function responseObj(array_of_positions, param) {
                         "richInitialPrompt": {
                             "items": [
                                 {
-                                    "simpleResponse": {
-                                        "textToSpeech": response
-                                    }
-                                },
-                                {
                                     "basicCard": {
                                         "title": array_of_positions[0],
-                                        "formattedText": "We found your ",
+                                        "formattedText": response,
                                         "image": {
                                             "url": "https://example.google.com/42.png",
                                             "accessibilityText": "Image alternate text"
@@ -105,15 +100,10 @@ function responseObj(array_of_positions, param) {
                             ],
                             "suggestions": []
                         }
-                    },
-                    "possibleIntents": [
-                        {
-                            "intent": "actions.intent.TEXT"
-                        }
-                    ]
+                    }
                 }
             ]
-        }
+        };
     }
     else {
         response = "I found " + array_of_positions.length + " " + param + ". Which one do you want me to find?"
