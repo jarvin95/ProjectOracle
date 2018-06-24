@@ -69,6 +69,7 @@ function responseObj(array_of_positions, param) {
     var response = "";
     if (array_of_positions.length === 0) {
         response = "I don't see your " + param + " anywhere.";
+        console.log(response);
         return {
             "fulfillmentText": response,
             "source": "Oracle by jr.io"
@@ -76,6 +77,7 @@ function responseObj(array_of_positions, param) {
     }
     else if(array_of_positions.length === 1) {
         response = "I found your " + param + " on or around " + array_of_positions[0] + " in the living room.";
+        console.log(response);
         return {
             "conversationToken": "",
             "expectUserResponse": false,
@@ -115,7 +117,7 @@ function responseObj(array_of_positions, param) {
     }
     else {
         response = "I found " + array_of_positions.length + " " + param + ". Which one do you want me to find?"
-
+        console.log(response);
         var items = [];
         var count = 0;
         array_of_positions.forEach(function(element) {
