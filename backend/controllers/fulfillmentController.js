@@ -25,6 +25,9 @@ exports.fulfill = function (req, res, next) {
     var query1 = "SELECT `id` FROM `Object` WHERE `name` = \"" + param + "\" LIMIT 1;";
     con.query(query1, function (err, result1) {
         if (err) throw err;
+        if (typeof(result1) === undefined) {
+            return res.json("");
+        }
         var object_id = result1[0].id;
         console.log("result1: " + object_id);
         if (typeof(object_id) === undefined) {
