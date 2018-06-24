@@ -99,7 +99,7 @@ function responseObj(array_of_positions, param) {
                 "title": param + count,
                 "description": element,
                 "image": {
-                    "url": "http://example.com/math_and_prime.jpg",
+                    "url": "https://www.google.com.sg/logos/doodles/2018/world-cup-2018-day-11-5692104616443904-5703128158568448-ssw.png",
                     "accessibilityText": "Math & prime numbers"
                 }
             });
