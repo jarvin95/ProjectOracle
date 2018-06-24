@@ -157,16 +157,15 @@ exports.latest_cam = function(req, res, next) {
 exports.obj_crops = function(req, res, next) {
 
     res.writeHead(200, {'Content-Type': 'image/jpg'});
-    var img = gm('./uploads/cam-2')
-                .setFormat("jpg")
-                .crop(100,100, 0, 0)
-                .stream('jpg', function (err, stdout, stderr) {
-                    if (err) {
-                        console.log(err);
-                        return next(err);
-                    }
-                    stdout.pipe(res);
-                });
+    gm('./uploads/cam-2')
+        .crop(100, 100, 0, 0)
+        .write('./tmp.jpg', (err) => {
+            if (err) {
+                console.log(err); 
+            } else {
+                res.sendFile('./tmp.jpg');
+            }
+        });
 }
 
 /*exports.read_result_from_id = function (req, res, next) {
