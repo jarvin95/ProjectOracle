@@ -100,10 +100,10 @@ function responseObj(array_of_positions, param) {
                     "url": "http://example.com/math_and_prime.jpg",
                     "accessibilityText": "Math & prime numbers"
                 }
-            })
+            });
         });
-        while(items.size !== array_of_positions.length) {
-            console.log("A: " + items.size);
+        while(items.length !== array_of_positions.length) {
+            console.log("A: " + items.length);
             console.log(array_of_positions.length);
         }
         return {
