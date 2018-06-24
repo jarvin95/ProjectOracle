@@ -88,18 +88,25 @@ function responseObj(array_of_positions, param) {
                         "richInitialPrompt": {
                             "items": [
                                 {
-                                    "basicCard": {
-                                        "title": array_of_positions[0],
-                                        "formattedText": response,
-                                        "image": {
-                                            "url": "https://example.google.com/42.png",
-                                            "accessibilityText": "Image alternate text"
-                                        },
-                                        "imageDisplayOptions": "CROPPED"
+                                    "simpleResponse": {
+                                        "textToSpeech": "Alright! " + response
+                                    }
+                                },
+                                {
+                                    "carouselBrowse": {
+                                        "items": [
+                                            {
+                                                "title": array_of_positions[0],
+                                                "image": {
+                                                    "url": "https://example.google.com/42.png",
+                                                    "accessibilityText": "Image alternate text"
+                                                },
+                                                "imageDisplayOptions": "CROPPED"
+                                            }
+                                        ]
                                     }
                                 }
-                            ],
-                            "suggestions": []
+                            ]
                         }
                     }
                 }
