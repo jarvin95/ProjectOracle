@@ -87,7 +87,7 @@ function responseObj(array_of_positions, param) {
                     "inputPrompt": {
                         "initialPrompts": [
                             {
-                                "textToSpeech": "Alright! " + response
+                                "textToSpeech": "Alright! "
                             }
                         ],
                         "noInputPrompts": []
