@@ -156,13 +156,13 @@ exports.latest_cam = function(req, res, next) {
 
 exports.obj_crops = function(req, res, next) {
 
-    res.writeHead(200, {'Content-Type': 'image/jpg'});
     gm('./uploads/cam-2')
         .crop(100, 100, 0, 0)
         .write('./tmp.jpg', (err) => {
             if (err) {
                 console.log(err); 
             } else {
+                res.writeHead(200, {'Content-Type': 'image/jpg'});
                 res.sendFile('tmp.jpg', { root: __dirname });
             }
         });
