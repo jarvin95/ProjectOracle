@@ -13,6 +13,7 @@ con.connect();
 var spawn = require("child_process").spawn;
 var fs = require('fs');
 var gm = require('gm').subClass({ imageMagick: true });
+var path = require('path');
 
 var options = {
     cwd: '/home/ashiswin/Documents/ProjectOracle/image_processing/',
@@ -162,7 +163,7 @@ exports.obj_crops = function(req, res, next) {
             if (err) {
                 console.log(err); 
             } else {
-                res.sendFile('../tmp.jpg', { root: __dirname });
+                res.sendFile(path.resolve('../tmp.jpg') , { root: __dirname });
             }
         });
 }
