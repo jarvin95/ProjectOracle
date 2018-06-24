@@ -42,7 +42,7 @@ exports.fulfill = function (req, res, next) {
                 console.log(responseObj(response, param));
                 return res.json(responseObj(response, param));
             }
-            response = "Your" + param + " is " + position;
+            response = "Your " + param + " is " + position;
             console.log(responseObj(response, param));
             return res.json(responseObj(response, param));
         });
