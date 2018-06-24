@@ -19,45 +19,41 @@ exports.fulfill = function (req, res, next) {
     res.setHeader('Content-Type', 'application/json');
     console.log(req.body);
     var param = req.body.queryResult.parameters['item'];
-    //var response = generate_message(param, retrieve(param));
-    var responseObj = {
-        "fulfillmentText": "response",
-        "fulfillmentMessages": [
-            {
-                "text": {
-                    "text": ["message"]
-                }
-            }
-        ],
-        "source": "Oracle by jr.io"
-    };
-    console.log(responseObj);
-    return res.json(responseObj);
-};
+    var response = "";
 
-function retrieve(item_string) {
     console.log("retrieve start");
-    var query1 = "SELECT `id` FROM Object WHERE name = \"" + item_string + "\";";
+    var query1 = "SELECT `id` FROM `Object` WHERE `name` = \"" + param + "\" LIMIT 1;";
     con.query(query1, function (err, result1) {
         if (err) throw err;
-        if (typeof(result1) === undefined) {
-            return "";
+        var object_id = result1[0].id;
+        console.log("result1: " + object_id);
+        if (typeof(object_id) === undefined) {
+            response = "I don't know what a " + param + " is.";
+            console.log(responseObj(response));
+            return res.json(responseObj(response));
         }
-        var query2 = "SELECT `reference_object` FROM Instance WHERE `parent_object_id` = \"" + result1 + "\" ORDER BY ID DESC LIMIT 1;";
-        con.query(query2, function(err, result2) {
+        var query2 = "SELECT `reference_object` FROM `Instance` WHERE `parent_object_id` = \"" + object_id + "\" ORDER BY ID DESC LIMIT 1;";
+        con.query(query2, function (err, result2) {
             if (err) throw err;
-            if (typeof(result2) === undefined) {
-                return "";
+            var position = result2[0].reference_object;
+            console.log("result2: " + position);
+            if (typeof(position) === undefined) {
+                response = param + " cannot be found.";
+                console.log(responseObj(response));
+                return res.json(responseObj(response));
             }
-            return result2;
+            response = param + " is " + position;
+            console.log(responseObj(response));
+            return res.json(responseObj(response));
         });
     });
-    console.log("retrieve end");
+};
+
+function responseObj(response) {
+    var responseObj = {
+        "fulfillmentText": response,
+        "source": "Oracle by jr.io"
+    };
+    return responseObj;
 }
 
-function generate_message(item_string, item_location) {
-    if (typeof(item_location) === undefined || item_location === undefined) {
-        return item_string + " cannot be found."
-    }
-    return item_string + " is " + item_location;
-}
