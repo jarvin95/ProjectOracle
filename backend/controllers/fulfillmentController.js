@@ -85,7 +85,7 @@ function responseObj(array_of_positions, param) {
         };
     }
     else {
-        response = "I found " + array_of_positions.length + " " + param + ". Which one do you want me to find?"
+        response = "I found " + array_of_positions.length + " " + param + ". Which one do you want me to find?";
         console.log(response);
         var items = [];
         var count = 0;
