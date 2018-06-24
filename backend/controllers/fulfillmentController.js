@@ -25,6 +25,9 @@ exports.fulfill = function (req, res, next) {
     var query1 = "SELECT `id` FROM `Object` WHERE `name` = \"" + param + "\" LIMIT 1;";
     con.query(query1, function (err, result1) {
         if (err) throw err;
+        if (typeof(result1) === undefined) {
+            return res.json("");
+        }
         var object_id = result1[0].id;
         console.log("result1: " + object_id);
         if (typeof(object_id) === undefined) {
@@ -85,11 +88,44 @@ function responseObj(response, object_name) {
                             "simpleResponse": {
                                 "textToSpeech": response
                             }
+                        },
+                        {
+                            "carouselBrowse": {
+                                "items": [
+                                    {
+                                        "title": "Title of item 1",
+                                        "description": "Description of item 1",
+                                        "footer": "Item 1 footer",
+                                        "image": {
+                                            "url": "https://www.gstatic.com/mobilesdk/170329_assistant/assistant_color_96dp.png",
+                                            "accessibilityText": "Google Assistant Bubbles"
+                                        },
+                                        "openUrlAction": {
+                                            "url": "https://github.com"
+                                        }
+                                    },
+                                    {
+                                        "title": "Title of item 2",
+                                        "description": "Description of item 2",
+                                        "footer": "Item 2 footer",
+                                        "image": {
+                                            "url": "https://www.gstatic.com/mobilesdk/170329_assistant/assistant_color_96dp.png",
+                                            "accessibilityText": "Google Assistant Bubbles"
+                                        },
+                                        "openUrlAction": {
+                                            "url": "https://google.com"
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     ]
                 }
             }
-        }
+        },
+        "outputContexts": [
+
+        ]
     };
     return responseObj;
 }
