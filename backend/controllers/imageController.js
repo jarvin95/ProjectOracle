@@ -134,7 +134,7 @@ exports.latest_obj = function(req, res, next) {
         if (result.length > 0) {
             var filename = "./uploads/obj-" + result[0].id;    
             var img = fs.readFileSync(filename);
-            res.writeHead('Content-Type': 'image/jpg');
+            res.writeHead('Content-Type', 'image/jpg');
             res.end(img, 'binary');
         } else {
             res.json({'success': false, 'message': 'object not found'});
