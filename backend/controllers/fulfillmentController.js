@@ -68,7 +68,7 @@ exports.fulfill = function (req, res, next) {
 
 function responseObj(array_of_positions, param) {
     var response = "";
-    if (array_of_positions.length == 0) {
+    if (array_of_positions.length === 0) {
         response = "I don't see your " + param + " anywhere.";
         console.log(response);
         return {
@@ -76,7 +76,7 @@ function responseObj(array_of_positions, param) {
             "source": "Oracle by jr.io"
         };
     }
-    else if(array_of_positions.length == 1) {
+    else if(array_of_positions.length === 1) {
         response = "I found your " + param + " on or around " + array_of_positions[0] + " in the living room.";
         console.log(response);
         return {
@@ -112,7 +112,7 @@ function responseObj(array_of_positions, param) {
                                             "title": "Math & prime numbers",
                                             "description": "42 is an abundant number because the sum of its proper divisors 54 is greater…",
                                             "image": {
-                                                "url": "http://example.com/math_and_prime.jpg",
+                                                "url": "http://https://lh6.googleusercontent.com/-AV-CUWg1Ulo/AAAAAAAAAAI/AAAAAAAANp4/GKLLzwRD8zs/photo.jpg?sz=64",
                                                 "accessibilityText": "Math & prime numbers"
                                             }
                                         },
@@ -128,7 +128,7 @@ function responseObj(array_of_positions, param) {
                                             "title": "Ancient Egyptian religion",
                                             "description": "42 gods who ruled on the fate of the dead in the afterworld. Throughout the under…",
                                             "image": {
-                                                "url": "http://example.com/egypt",
+                                                "url": "https://lh6.googleusercontent.com/-AV-CUWg1Ulo/AAAAAAAAAAI/AAAAAAAANp4/GKLLzwRD8zs/photo.jpg?sz=64",
                                                 "accessibilityText": "Egypt"
                                             }
                                         },
@@ -144,7 +144,7 @@ function responseObj(array_of_positions, param) {
                                             "title": "42 recipes with 42 ingredients",
                                             "description": "Here's a beautifully simple recipe that's full of flavor! All you need is some ginger and…",
                                             "image": {
-                                                "url": "http://example.com/recipe",
+                                                "url": "https://lh6.googleusercontent.com/-AV-CUWg1Ulo/AAAAAAAAAAI/AAAAAAAANp4/GKLLzwRD8zs/photo.jpg?sz=64",
                                                 "accessibilityText": "Recipe"
                                             }
                                         }
