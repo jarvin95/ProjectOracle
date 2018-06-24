@@ -69,7 +69,21 @@ function responseObj(response, object_name) {
                 }
             }
         ],
-        "source": "Oracle by jr.io"
+        "source": "Oracle by jr.io",
+        "payload": {
+            "google": {
+                "expectUserResponse": true,
+                "richResponse": {
+                    "items": [
+                        {
+                            "simpleResponse": {
+                                "textToSpeech": response
+                            }
+                        }
+                    ]
+                }
+            }
+        }
     };
     return responseObj;
 }
