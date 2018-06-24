@@ -68,7 +68,7 @@ exports.fulfill = function (req, res, next) {
 
 function responseObj(array_of_positions, param) {
     var response = "";
-    if (array_of_positions.length === 0) {
+    if (array_of_positions.length == 0) {
         response = "I don't see your " + param + " anywhere.";
         console.log(response);
         return {
@@ -76,7 +76,7 @@ function responseObj(array_of_positions, param) {
             "source": "Oracle by jr.io"
         };
     }
-    else if(array_of_positions.length === 1) {
+    else if(array_of_positions.length == 1) {
         response = "I found your " + param + " on or around " + array_of_positions[0] + " in the living room.";
         console.log(response);
         return {
@@ -101,11 +101,9 @@ function responseObj(array_of_positions, param) {
                     "accessibilityText": "Math & prime numbers"
                 }
             });
+            count++;
         });
-        while(items.length !== array_of_positions.length) {
-            console.log("A: " + items.length);
-            console.log(array_of_positions.length);
-        }
+        console.log(items);
         return {
             "conversationToken": "",
             "expectUserResponse": true,
