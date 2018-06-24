@@ -122,14 +122,14 @@ function responseObj(array_of_positions, param) {
                                         "title": "Math & prime numbers",
                                         "formattedText": "42 is an even composite number. It\n    is composed of three distinct prime numbers multiplied together. It\n    has a total of eight divisors. 42 is an abundant number, because the\n    sum of its proper divisors 54 is greater than itself. To count from\n    1 to 42 would take you about twenty-one…",
                                         "image": {
-                                            "url": "https://example.google.com/42.png",
+                                            "url": "https://www.google.com/logos/doodles/2018/world-cup-2018-day-11-5692104616443904-5663741160980480-ssw.png",
                                             "accessibilityText": "Image alternate text"
                                         },
                                         "buttons": [
                                             {
                                                 "title": "Read more",
                                                 "openUrlAction": {
-                                                    "url": "https://example.google.com/mathandprimes"
+                                                    "url": "https://www.google.com/logos/doodles/2018/world-cup-2018-day-11-5692104616443904-5663741160980480-ssw.png"
                                                 }
                                             }
                                         ],
