@@ -63,9 +63,15 @@ function responseObj(response, object_name) {
         "fulfillmentMessages": [
             {
                 "card": {
-                    "title": "Your " + object_name,
-                    "subtitle": response,
-                    "imageUri": "https://shinola.imgix.net/media/catalog/product/1/0/10009507_Slim_Bi-Fold_Wallet_Black_V1_3840H.png?bg=f7f7f7&fm=jpg&h=900&ixlib=php-1.1.0&q=90&w=1920"
+                    "title": "card_title",
+                    "subtitle": "response",
+                    "imageUri": "https://assistant.google.com/static/images/molecule/Molecule-Formation-stop.png",
+                    "buttons": [
+                        {
+                            "text": "buttonText",
+                            "postback": "http://assistant.google.com/"
+                        }
+                    ]
                 }
             }
         ],
