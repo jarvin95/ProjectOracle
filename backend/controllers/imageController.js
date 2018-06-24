@@ -142,6 +142,17 @@ exports.latest_obj = function(req, res, next) {
     });
 }
 
+
+exports.latest_cam = function(req, res, next) {
+
+    var filename = "./uploads/cam-2";    
+    var img = fs.readFileSync(filename);
+
+    res.writeHead(200, {'Content-Type': 'image/jpg'});
+    res.end(img, 'binary');
+}
+
+
 /*exports.read_result_from_id = function (req, res, next) {
     // Return all Result
     if (typeof(req.query) === "undefined" || typeof (req.query.id) === "undefined") {
